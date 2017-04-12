@@ -6,12 +6,12 @@ class GameWindow < Hasu::Window
   def initialize
     super(WINDOW_X, WINDOW_Y, false)
     @background_sprite = Gosu::Image.new(self, 'images/background.png', true)
-    @koala_sprite = Gosu::Image.new(self, 'images/koala.png', true)
-    @enemy_sprite = Gosu::Image.new(self, 'images/enemy.png', true)
+    @koala_sprite = Gosu::Image.new(self, 'images/goku2.png', true)
+    @enemy_sprite = Gosu::Image.new(self, 'images/Freezer.png', true)
     @flag_sprite = Gosu::Image.new(self, 'images/flag.png', true)
     @font = Gosu::Font.new(self, Gosu::default_font_name, 30)
     @flag = {x: WINDOW_X - SPRITE_SIZE, y: WINDOW_Y - SPRITE_SIZE}
-    @music = Gosu::Song.new(self, "musics/koala.wav")
+    @music = Gosu::Song.new(self, "musics/Chala-head-Chala.wav")
     reset
   end
 
