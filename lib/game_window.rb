@@ -33,7 +33,7 @@ class GameWindow < Hasu::Window
   end
 
   def draw
-    @font.draw("Level #{@enemies.length}", WINDOW_X - 100, 10, 3, 1.0, 1.0, Gosu::Color::BLUE)
+    @font.draw("Level #{@enemies.length}", WINDOW_X - 100, 10, 3, 1.0, 1.0, Gosu::Color::BLACK)
 
     @koala_sprite.draw(@player[:x], @player[:y], 2)
     @enemies.each do |enemy|
