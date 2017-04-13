@@ -1,14 +1,18 @@
 class GameWindow < Hasu::Window
   SPRITE_SIZE = 128
   SPRITE_SIZE2 = 700
-  WINDOW_X = 1024
-  WINDOW_Y = 720
+  WINDOW_X = 1280
+  WINDOW_Y = 620
 
   def initialize
     super(WINDOW_X, WINDOW_Y, false)
     @background_sprite = Gosu::Image.new(self, 'images/background.png', true)
     @koala_sprite = Gosu::Image.new(self, 'images/goku2.png', true)
     @enemy_sprite = Gosu::Image.new(self, 'images/Freezer.png', true)
+    @enemy2_sprite = Gosu::Image.new(self, 'images/buu.png', true)
+    @enemy3_sprite = Gosu::Image.new(self, 'images/cell.png', true)
+    @enemy4_sprite = Gosu::Image.new(self, 'images/beerus.png', true)
+    @tab_enemy = [@enemy_sprite, @enemy2_sprite, @enemy3_sprite, @enemy4_sprite]
     @flag_sprite = Gosu::Image.new(self, 'images/DB.png', true)
     @font = Gosu::Font.new(self, Gosu::default_font_name, 30)
     @flag = {x: WINDOW_X - SPRITE_SIZE, y: WINDOW_Y - SPRITE_SIZE2}
@@ -20,7 +24,7 @@ class GameWindow < Hasu::Window
     @player[:x] += @speed if button_down?(Gosu::Button::KbRight)
     @player[:x] -= @speed if button_down?(Gosu::Button::KbLeft)
     @player[:y] += @speed if button_down?(Gosu::Button::KbDown)
-    @player[:y] -= @speed if button_down?(Gosu::Button::KbUp)
+    #@player[:y] -= @speed if button_down?(Gosu::Button::KbUp)
     @player[:x] = normalize(@player[:x], WINDOW_X - SPRITE_SIZE)
     @player[:y] = normalize(@player[:y], WINDOW_Y - SPRITE_SIZE)
     handle_enemies
@@ -34,11 +38,12 @@ class GameWindow < Hasu::Window
   end
 
   def draw
-    @font.draw("Level #{@enemies.length}", WINDOW_X - 100, 10, 3, 1.0, 1.0, Gosu::Color::WHITE)
+    @font.draw("Level #{@enemies.length}", WINDOW_X - WINDOW_X + 10, 10, 3, 1.0, 1.0, Gosu::Color::WHITE)
 
     @koala_sprite.draw(@player[:x], @player[:y], 2)
     @enemies.each do |enemy|
-      @enemy_sprite.draw(enemy[:x], enemy[:y], 2)
+      @add_enemy.draw(enemy[:x], enemy[:y], 2)
+      #@enemy2_sprite.draw(enemy[:x], enemy[:y], 2)
     end
     @flag_sprite.draw(@flag[:x], @flag[:y], 1)
     (0..8).each do |x|
@@ -49,6 +54,10 @@ class GameWindow < Hasu::Window
   end
 
   private
+
+  def add_random
+    @add_enemy = @tab_enemy.sample
+  end
 
   def reset
     @high_score = 0
@@ -62,7 +71,7 @@ class GameWindow < Hasu::Window
   end
 
   def reinit
-    @speed += 2
+    @speed += 1
     @player = {x: 000, y: 700}
     @enemies.push({x: 700 + rand(100), y: 000 + rand(500)})
     high_score
@@ -90,6 +99,8 @@ class GameWindow < Hasu::Window
   def winning?
     collision?(@player, @flag)
   end
+
+
 
   def random_mouvement
     (rand(3) - 1)
